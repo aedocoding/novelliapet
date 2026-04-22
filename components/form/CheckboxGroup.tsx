@@ -24,12 +24,12 @@ export default function CheckboxGroup({
           <Text style={styles.label}>{label}</Text>
           <View style={styles.row}>
             {options.map((option) => {
-              const selected: boolean = value.includes(option);
+              const selected: boolean = value?.includes(option);
               const toggleCheckbox = () =>
                 onChange(
                   selected
-                    ? value.filter((checked: any) => checked !== option)
-                    : [...value, option],
+                    ? (value ?? []).filter((checked: any) => checked !== option)
+                    : [...(value ?? []), option],
                 );
               return (
                 <TouchableOpacity

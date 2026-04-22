@@ -52,7 +52,7 @@ export function PetProvider({ children }: { children: React.ReactNode }) {
 
   async function updatePet(userId: string, pet: Omit<Pet, "userId">) {
     const updatedPet = await putPet(userId, pet);
-    replacePetInList(updatedPet);
+    replacePetInList({ ...updatedPet, records: updatedPet.records ?? pet.records });
   }
 
   async function removePet(userId: string, petId: string) {

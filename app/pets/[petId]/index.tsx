@@ -6,7 +6,7 @@ import { useUser } from "@/context/UserContext";
 import { MedicalRecord } from "@/types/models";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function PetDetailScreen() {
   const { petId } = useLocalSearchParams<{ petId: string }>();
@@ -60,7 +60,24 @@ export default function PetDetailScreen() {
         <View style={styles.divider} />
         <View style={styles.spacer} />
         <View style={styles.petInfoRow}>
-          <Text style={styles.petName}>{pet.name}</Text>
+          {pet.photo ? (
+            <Image source={{ uri: pet.photo }} style={styles.petPhoto} />
+          ) : (
+            <View style={[styles.petPhoto, styles.petPhotoPlaceholder]} />
+          )}
+          <View style={styles.petInfoText}>
+            <Text style={styles.petName}>{pet.name}</Text>
+            <Text style={styles.petMeta}>Type: {pet.animalType}</Text>
+            <Text style={styles.petMeta}>Breed: {pet.breed}</Text>
+            <Text style={styles.petMeta}>
+              Date of Birth:{" "}
+              {new Date(pet.dateOfBirth).toLocaleDateString("en-US", {
+                month: "2-digit",
+                day: "2-digit",
+                year: "numeric",
+              })}
+            </Text>
+          </View>
           <View style={styles.petActions}>
             <CTAButton
               label="Edit Pet"
@@ -77,16 +94,6 @@ export default function PetDetailScreen() {
             />
           </View>
         </View>
-        <Text style={styles.petMeta}>Type: {pet.animalType}</Text>
-        <Text style={styles.petMeta}>Breed: {pet.breed}</Text>
-        <Text style={styles.petMeta}>
-          Date of Birth:{" "}
-          {new Date(pet.dateOfBirth).toLocaleDateString("en-US", {
-            month: "2-digit",
-            day: "2-digit",
-            year: "numeric",
-          })}
-        </Text>
         <View style={styles.divider} />
         <View style={styles.spacer} />
         {(allergies.length > 0 || medications.length > 0) && (
@@ -105,7 +112,6 @@ export default function PetDetailScreen() {
           </View>
         )}
         <View style={styles.spacer} />
-
         <View style={styles.divider} />
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Medical Records</Text>
@@ -166,19 +172,31 @@ const styles = StyleSheet.create({
   },
   petInfoRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    gap: Spacing.md,
+  },
+  petPhoto: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+  },
+  petPhotoPlaceholder: {
+    backgroundColor: Colors.border,
+  },
+  petInfoText: {
+    width:'40%',
+    gap: 2,
   },
   petName: {
-    fontSize: FontSizes.lg,
+    fontSize: FontSizes.md,
     fontWeight: "bold",
   },
   petActions: {
-    flexDirection: "row",
+    flexDirection: "column",
     gap: Spacing.sm,
   },
   petMeta: {
-    fontSize: FontSizes.md,
+    fontSize: FontSizes.sm,
     color: Colors.text,
   },
   sectionHeader: {

@@ -11,6 +11,7 @@ import {
   AllergyOptions,
   AllergyRecord,
   AllergySeverityList,
+  MedicalRecord,
   MedicationRecord,
   VaccineRecord,
 } from "@/types/models";
@@ -67,7 +68,10 @@ export default function EditRecordScreen() {
   const selectedType = useWatch({ control, name: "type" });
 
   const onSubmit = async (data: RecordForm) => {
-    await updateRecord(user!.id, petId, { ...data, id: recordId } as any);
+    await updateRecord(user!.id, petId, {
+      ...data,
+      id: recordId,
+    } as MedicalRecord);
     router.back();
   };
 

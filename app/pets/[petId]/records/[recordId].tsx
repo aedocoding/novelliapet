@@ -10,6 +10,7 @@ import { useUser } from "@/context/UserContext";
 import {
   AllergyOptions,
   AllergyRecord,
+  AllergySeverityList,
   MedicationRecord,
   VaccineRecord,
 } from "@/types/models";
@@ -112,7 +113,7 @@ export default function EditRecordScreen() {
               control={control}
               name="severity"
               label="Severity"
-              options={["mild", "severe"]}
+              options={AllergySeverityList}
             />
           </>
         )}

@@ -6,7 +6,7 @@ import CTAButton from "@/components/ui/CTAButton";
 import { Colors, FontSizes, Layout, Spacing } from "@/constants/theme";
 import { usePet } from "@/context/PetContext";
 import { useUser } from "@/context/UserContext";
-import { AnimalType } from "@/types/models";
+import { AnimalType, AnimalTypeList } from "@/types/models";
 import { router } from "expo-router";
 import { useForm } from "react-hook-form";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -42,7 +42,7 @@ export default function AddPetScreen() {
           control={control}
           name="animalType"
           label="Type"
-          options={["Dog", "Cat", "Bird", "Capybara"]}
+          options={AnimalTypeList}
         />
         <FormInput control={control} name="breed" label="Breed" />
         <DatePickerInput

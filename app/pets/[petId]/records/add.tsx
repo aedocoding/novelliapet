@@ -7,7 +7,7 @@ import CTAButton from "@/components/ui/CTAButton";
 import { Colors, FontSizes, Layout, Spacing } from "@/constants/theme";
 import { usePet } from "@/context/PetContext";
 import { useUser } from "@/context/UserContext";
-import { AllergyOptions, AllergyReaction } from "@/types/models";
+import { AllergyOptions, AllergyReaction, AllergySeverityList, MedicalRecord } from "@/types/models";
 import { router, useLocalSearchParams } from "expo-router";
 import { useForm, useWatch } from "react-hook-form";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -37,7 +37,7 @@ export default function AddRecordScreen() {
   const selectedType = useWatch({ control, name: "type" });
 
   const onSubmit = async (data: RecordForm) => {
-    await createRecord(user!.id, petId, data as any);
+    await createRecord(user!.id, petId, data as MedicalRecord);
     router.back();
   };
 
@@ -81,7 +81,7 @@ export default function AddRecordScreen() {
               control={control}
               name="severity"
               label="Severity"
-              options={["mild", "severe"]}
+              options={AllergySeverityList}
             />
           </>
         )}

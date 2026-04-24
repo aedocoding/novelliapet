@@ -1,3 +1,14 @@
+
+export type AnimalType = "Dog" | "Cat" | "Bird" | "Capybara";
+export const AnimalTypeList: AnimalType[] = ["Dog", "Cat", "Bird", "Capybara"]
+export type AllergyReaction =
+  | "Hives"
+  | "Rash"
+  | "Swelling"
+  | "Vomiting"
+  | "Sneezing"
+  | "Itching"
+  | "Difficulty breathing";
 export const AllergyOptions: AllergyReaction[] = [
   "Hives",
   "Rash",
@@ -7,18 +18,8 @@ export const AllergyOptions: AllergyReaction[] = [
   "Sneezing",
   "Itching",
 ];
-export type AnimalType = "Dog" | "Cat" | "Bird" | "Capybara";
-
-export type AllergyReaction =
-  | "Hives"
-  | "Rash"
-  | "Swelling"
-  | "Vomiting"
-  | "Sneezing"
-  | "Itching"
-  | "Difficulty breathing";
-
 export type AllergySeverity = "Mild" | "Severe";
+export const AllergySeverityList: AllergySeverity[] = ["Mild", "Severe"]
 
 export interface User {
   id: string;

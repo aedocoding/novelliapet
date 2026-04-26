@@ -5,7 +5,7 @@ import { useEffect } from "react";
 export default function AuthGate({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
   const pathname = usePathname();
-  const unprotected = ["/", "/login", "/register", "/add-first-pet"];
+  const unprotected = ["/", "/login", "/register"];
 
   useEffect(() => {
     if (!user && !unprotected.includes(pathname)) router.replace("/");

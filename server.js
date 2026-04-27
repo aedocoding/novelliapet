@@ -113,6 +113,17 @@ app.delete("/users/:userId/pets/:petId", (req, res) => {
 
 // --- Records ---
 
+function pickRecordFields(body) {
+  const common = { type: body.type, name: body.name };
+  if (body.type === "Vaccine")
+    return { ...common, dateAdministered: body.dateAdministered };
+  if (body.type === "Allergy")
+    return { ...common, reactions: body.reactions, severity: body.severity };
+  if (body.type === "Medication")
+    return { ...common, dosage: body.dosage, instructions: body.instructions };
+}
+
+
 app.post("/users/:userId/pets/:petId/records", (req, res) => {
   const { userId, petId } = req.params;
   const pet = store.pets[petId];
@@ -126,7 +137,7 @@ app.post("/users/:userId/pets/:petId/records", (req, res) => {
       .json({ error: "type must be Vaccine, Allergy, or Medication" });
   }
 
-  const record = { id: randomUUID(), petId, ...req.body };
+  const record = { id: randomUUID(), petId, ...pickRecordFields(req.body) };
   store.records[record.id] = record;
   res.status(201).json(record);
 });
@@ -141,7 +152,7 @@ app.put("/users/:userId/pets/:petId/records/:recordId", (req, res) => {
   if (!record || record.petId !== petId)
     return res.status(404).json({ error: "record not found" });
 
-  store.records[recordId] = { ...record, ...req.body, id: recordId, petId };
+  store.records[recordId] = { ...record, ...pickRecordFields(req.body), id: recordId, petId };
   res.json(store.records[recordId]);
 });
 
